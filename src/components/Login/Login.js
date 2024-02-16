@@ -3,14 +3,14 @@
 import { Input } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import Button from "../Button/Button";
-import lockLottie from "@/assets/lock.json";
+import loginLottie from "@/assets/login.json";
 import Lottie from "lottie-react";
 import Container from "../Container/Container";
-import { IoEyeOff } from "react-icons/io5";
 import { MdRemoveRedEye } from "react-icons/md";
+import { IoEyeOff } from "react-icons/io5";
 import { useState } from "react";
 
-const SignUp = () => {
+const Login = () => {
   const {
     register,
     handleSubmit,
@@ -23,30 +23,14 @@ const SignUp = () => {
   return (
     <Container>
       <div className="flex items-center gap-8">
-        <Lottie
-          className="hidden md:inline-block md:w-1/2"
-          animationData={lockLottie}
-          loop={false}
-        />
         <form
           className="w-full md:w-1/2 space-y-4 py-12"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
           <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-center">
-            Sign Up
+            Login
           </h1>
-          <Input
-            type="text"
-            label="Name"
-            {...register("name", {
-              required: "This field is required",
-            })}
-            variant="bordered"
-            color={errors.name ? "danger" : "success"}
-            errorMessage={errors.name && errors.name?.message}
-            className="w-full"
-          />
           <Input
             type="email"
             label="Email"
@@ -67,19 +51,6 @@ const SignUp = () => {
             label="Password"
             {...register("password", {
               required: "This field is required",
-              minLength: {
-                value: 6,
-                message: "Password should have at least 6 character",
-              },
-              maxLength: {
-                value: 32,
-                message: "Password should contain less than 32 character",
-              },
-              pattern: {
-                value: /(?=.*[0-9])(?=.*[A-Z])/,
-                message:
-                  "Password should have at least one capital letter, and a number.",
-              },
             })}
             variant="bordered"
             color={errors.password ? "danger" : "success"}
@@ -100,12 +71,17 @@ const SignUp = () => {
             className="w-full"
           />
           <button type="submit" className="mx-auto">
-            <Button>Sign Up</Button>
+            <Button>Login</Button>
           </button>
         </form>
+        <Lottie
+          className="hidden md:inline-block md:w-1/2"
+          animationData={loginLottie}
+          loop={false}
+        />
       </div>
     </Container>
   );
 };
 
-export default SignUp;
+export default Login;
