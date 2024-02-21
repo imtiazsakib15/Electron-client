@@ -18,7 +18,10 @@ const SignUp = () => {
   } = useForm();
   const [isVisible, setIsVisible] = useState(false);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const { name, email } = data;
+    const userInfo = { name, email };
+  };
 
   return (
     <Container>
