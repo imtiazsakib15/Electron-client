@@ -9,6 +9,7 @@ import Container from "../Container/Container";
 import { IoEyeOff } from "react-icons/io5";
 import { MdRemoveRedEye } from "react-icons/md";
 import { useState } from "react";
+import useAuth from "@/hooks/useAuth";
 
 const SignUp = () => {
   const {
@@ -17,10 +18,20 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const [isVisible, setIsVisible] = useState(false);
+  const { createUser } = useAuth();
 
   const onSubmit = (data) => {
-    const { name, email } = data;
-    const userInfo = { name, email };
+    const { email, password } = data;
+    // const userInfo = { name, email };
+
+    createUser(email, password)
+      .then((userCredential) => {
+        console.log(userCredential.user);
+        // createUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -79,9 +90,9 @@ const SignUp = () => {
                 message: "Password should contain less than 32 character",
               },
               pattern: {
-                value: /(?=.*[0-9])(?=.*[A-Z])/,
+                value: /(?=.*[a-z])(?=.*[A-Z])/,
                 message:
-                  "Password should have at least one capital letter, and a number.",
+                  "Password should have at least one capital, and one small letter.",
               },
             })}
             variant="bordered"
