@@ -10,8 +10,9 @@ import { IoEyeOff } from "react-icons/io5";
 import { MdRemoveRedEye } from "react-icons/md";
 import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
+import { toast } from "sonner";
 
-const SignUp = () => {
+const SignUp = ({ saveUserInfo }) => {
   const {
     register,
     handleSubmit,
@@ -22,15 +23,16 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     const { email, password } = data;
-    // const userInfo = { name, email };
 
     createUser(email, password)
-      .then((userCredential) => {
-        console.log(userCredential.user);
-        // createUser(data);
+      .then(async () => {
+        const res = await saveUserInfo(data);
+        if (res?._id) {
+          toast.success("Registered Successfully!");
+        }
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error.message);
       });
   };
 
