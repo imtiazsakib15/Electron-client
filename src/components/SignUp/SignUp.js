@@ -2,15 +2,16 @@
 
 import { Input } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 import lockLottie from "@/assets/lock.json";
 import Lottie from "lottie-react";
-import Container from "../Container/Container";
+import Container from "@/components/Container/Container";
 import { IoEyeOff } from "react-icons/io5";
 import { MdRemoveRedEye } from "react-icons/md";
 import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const SignUp = ({ saveUserInfo }) => {
   const {
@@ -32,7 +33,7 @@ const SignUp = ({ saveUserInfo }) => {
         }
       })
       .catch((error) => {
-        toast.error(error.message);
+        toast.error(error?.message);
       });
   };
 
@@ -115,6 +116,12 @@ const SignUp = ({ saveUserInfo }) => {
             }
             className="w-full"
           />
+          <p>
+            Already have an account?{" "}
+            <Link href="/login" className="text-green-600 hover:underline">
+              Login
+            </Link>
+          </p>
           <button type="submit" className="mx-auto">
             <Button>Sign Up</Button>
           </button>

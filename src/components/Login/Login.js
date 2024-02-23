@@ -2,13 +2,15 @@
 
 import { Input } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 import loginLottie from "@/assets/login.json";
 import Lottie from "lottie-react";
-import Container from "../Container/Container";
+import Container from "@/components/Container/Container";
 import { MdRemoveRedEye } from "react-icons/md";
 import { IoEyeOff } from "react-icons/io5";
 import { useState } from "react";
+import useAuth from "@/hooks/useAuth";
+import Link from "next/link";
 
 const Login = () => {
   const {
@@ -17,12 +19,27 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const [isVisible, setIsVisible] = useState(false);
+  const { loginUser } = useAuth();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    loginUser(email, password)
+      .then(() => {
+        toast.success("Registered Successfully!");
+      })
+      .catch((error) => {
+        toast.error(error?.message);
+      });
+  };
 
   return (
     <Container>
       <div className="flex items-center gap-8">
+        <Lottie
+          className="hidden md:inline-block md:w-1/2"
+          animationData={loginLottie}
+          loop={false}
+        />
         <form
           className="w-full md:w-1/2 space-y-4 py-12"
           onSubmit={handleSubmit(onSubmit)}
@@ -70,15 +87,16 @@ const Login = () => {
             }
             className="w-full"
           />
+          <p>
+            Need to create an account?{" "}
+            <Link href="/sign-up" className="text-green-600 hover:underline">
+              Sign up
+            </Link>
+          </p>
           <button type="submit" className="mx-auto">
             <Button>Login</Button>
           </button>
         </form>
-        <Lottie
-          className="hidden md:inline-block md:w-1/2"
-          animationData={loginLottie}
-          loop={false}
-        />
       </div>
     </Container>
   );
