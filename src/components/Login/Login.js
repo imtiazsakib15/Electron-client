@@ -11,6 +11,7 @@ import { IoEyeOff } from "react-icons/io5";
 import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const Login = () => {
   const {
@@ -25,7 +26,7 @@ const Login = () => {
     const { email, password } = data;
     loginUser(email, password)
       .then(() => {
-        toast.success("Registered Successfully!");
+        toast.success("Login Successfully!");
       })
       .catch((error) => {
         toast.error(error?.message);
