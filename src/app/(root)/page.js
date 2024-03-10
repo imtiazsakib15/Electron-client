@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Home | Electron",
+  description: "This is a electronics product selling website.",
+};
+
 const Home = () => {
   return (
     <>

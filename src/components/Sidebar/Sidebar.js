@@ -25,7 +25,7 @@ const Sidebar = () => {
         </div>
         <div>
           <details className="focus-visible:outline-none">
-            <summary>Categories</summary>
+            <summary className="cursor-default">Categories</summary>
             <ul className="ps-8 pt-2 space-y-2">
               <li>
                 <Link href="/dashboard/categories/all">All</Link>
