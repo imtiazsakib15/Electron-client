@@ -35,7 +35,7 @@ const Login = () => {
 
   return (
     <Container>
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-12">
         <Lottie
           className="hidden md:inline-block md:w-1/2"
           animationData={loginLottie}
@@ -46,7 +46,7 @@ const Login = () => {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
-          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-center">
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-center pb-6">
             Login
           </h1>
           <Input
@@ -90,7 +90,10 @@ const Login = () => {
           />
           <p>
             Need to create an account?{" "}
-            <Link href="/sign-up" className="text-green-600 hover:underline">
+            <Link
+              href="/auth/sign-up"
+              className="text-green-600 hover:underline"
+            >
               Sign up
             </Link>
           </p>

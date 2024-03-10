@@ -50,14 +50,20 @@ const NavBar = () => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="primary" href="/sign-up" variant="flat">
+            <Button
+              as={Link}
+              color="success"
+              href="/auth/sign-up"
+              variant="flat"
+            >
               Sign Up
             </Button>
           </NavbarItem>
         </NavbarContent>
+
         <NavbarMenu>
           <NavbarMenuItem>
             <Link href="/">Home</Link>
@@ -66,7 +72,7 @@ const NavBar = () => {
             <Link href="/categories">Categories</Link>
           </NavbarMenuItem>
           <NavbarMenuItem>
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </NavbarMenuItem>
           <NavbarMenuItem>
             <Link href="/cart">
