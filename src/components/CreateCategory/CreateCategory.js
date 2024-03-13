@@ -2,8 +2,9 @@
 
 import { Input } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 import { FaUpload } from "react-icons/fa6";
+import { uploadImageToCloudinary } from "@/utils/uploadImageToCloudinary";
 
 const CreateCategory = () => {
   const {
@@ -12,8 +13,12 @@ const CreateCategory = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const image = data.image[0];
+    console.log(data.image);
+
+    const imageUrl = await uploadImageToCloudinary(image);
+    console.log(imageUrl);
   };
 
   return (
