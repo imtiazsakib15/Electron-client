@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 import Button from "@/components/Button/Button";
 import { FaUpload } from "react-icons/fa6";
 import { uploadImageToCloudinary } from "@/utils/uploadImageToCloudinary";
+import { toast } from "sonner";
 
-const CreateCategory = () => {
+const CreateCategory = ({ saveCategoryInfo }) => {
   const {
     register,
     handleSubmit,
@@ -15,10 +16,15 @@ const CreateCategory = () => {
 
   const onSubmit = async (data) => {
     const image = data.image[0];
-    console.log(data.image);
 
     const imageUrl = await uploadImageToCloudinary(image);
-    console.log(imageUrl);
+
+    const category = { name: data.name, image: imageUrl };
+    const result = await saveCategoryInfo(category);
+
+    if (result?._id) {
+      toast.success("Category added successfully!");
+    }
   };
 
   return (

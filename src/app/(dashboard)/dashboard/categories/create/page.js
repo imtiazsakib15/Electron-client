@@ -3,6 +3,7 @@ export const metadata = {
   description: "...",
 };
 
+import { saveCategoryInfo } from "@/actions/categoryActions";
 import CreateCategory from "@/components/CreateCategory/CreateCategory";
 
 const CreateCategoryPage = () => {
@@ -12,7 +13,7 @@ const CreateCategoryPage = () => {
         <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold text-center pb-8">
           Create New Category
         </h1>
-        <CreateCategory />
+        <CreateCategory saveCategoryInfo={saveCategoryInfo} />
       </div>
     </div>
   );
