@@ -9,68 +9,39 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/react";
+import Image from "next/image";
+import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 
 const AllCategory = ({ categories }) => {
-  const rows = [
-    {
-      key: "1",
-      name: "Tony Reichert",
-      role: "CEO",
-      status: "Active",
-    },
-    {
-      key: "2",
-      name: "Zoey Lang",
-      role: "Technical Lead",
-      status: "Paused",
-    },
-    {
-      key: "3",
-      name: "Jane Fisher",
-      role: "Senior Developer",
-      status: "Active",
-    },
-    {
-      key: "4",
-      name: "William Howard",
-      role: "Community Manager",
-      status: "Vacation",
-    },
-  ];
-
-  const columns = [
-    {
-      key: "name",
-      label: "NAME",
-    },
-    {
-      key: "role",
-      label: "ROLE",
-    },
-    {
-      key: "status",
-      label: "STATUS",
-    },
-  ];
   return (
-    <div>
-      <Table aria-label="Example table with dynamic content">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
+    <>
+      <Table aria-label="Example static collection table">
+        <TableHeader>
+          <TableColumn>IMAGE</TableColumn>
+          <TableColumn>NAME</TableColumn>
+          <TableColumn>ACTIONS</TableColumn>
         </TableHeader>
-        <TableBody items={rows}>
-          {(item) => (
-            <TableRow key={item.key}>
-              {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-              )}
+        <TableBody>
+          {categories?.map((category) => (
+            <TableRow key={category._id}>
+              <TableCell>
+                {/* <Image src={category.image} alt={`${category.name} Image`} /> */}
+                IMAGE
+              </TableCell>
+              <TableCell>{category.name}</TableCell>
+              <TableCell className="flex gap-4 text-xl">
+                <CiEdit title="UPDATE" className="cursor-pointer" />
+                <MdDelete
+                  title="DELETE"
+                  className="text-red-500 cursor-pointer"
+                />
+              </TableCell>
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
-    </div>
+    </>
   );
 };
 
