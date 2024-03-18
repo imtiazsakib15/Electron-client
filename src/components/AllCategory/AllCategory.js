@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteCategoryInfo, getAllCategory } from "@/actions/categoryActions";
 import {
   Table,
   TableHeader,
@@ -7,16 +8,25 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  getKeyValue,
 } from "@nextui-org/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
+import { toast } from "sonner";
 
 const AllCategory = ({ categories }) => {
+  const handleDeleteCategory = async (id) => {
+    const result = await deleteCategoryInfo(id);
+
+    if (result?._id) {
+      toast.success("Category deleted successfully!");
+    }
+  };
+
   return (
     <>
-      <Table aria-label="Example static collection table">
+      <Table aria-label="All category table">
         <TableHeader>
           <TableColumn>IMAGE</TableColumn>
           <TableColumn>NAME</TableColumn>
@@ -33,6 +43,7 @@ const AllCategory = ({ categories }) => {
               <TableCell className="flex gap-4 text-xl">
                 <CiEdit title="UPDATE" className="cursor-pointer" />
                 <MdDelete
+                  onClick={() => handleDeleteCategory(category._id)}
                   title="DELETE"
                   className="text-red-500 cursor-pointer"
                 />
