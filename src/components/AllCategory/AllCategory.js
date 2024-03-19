@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCategoryInfo, getAllCategory } from "@/actions/categoryActions";
+import { deleteCategoryInfo } from "@/actions/categoryActions";
 import {
   Table,
   TableHeader,
@@ -8,14 +8,18 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  useDisclosure,
 } from "@nextui-org/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
-
+import UpdateCategoryModal from "../UpdateCategoryModal/UpdateCategoryModal";
+import { useState } from "react";
 const AllCategory = ({ categories }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [updateCategory, setUpdateCategory] = useState(null);
+
   const handleDeleteCategory = async (id) => {
     const result = await deleteCategoryInfo(id);
 
@@ -41,7 +45,14 @@ const AllCategory = ({ categories }) => {
               </TableCell>
               <TableCell>{category.name}</TableCell>
               <TableCell className="flex gap-4 text-xl">
-                <CiEdit title="UPDATE" className="cursor-pointer" />
+                <CiEdit
+                  onClick={() => {
+                    setUpdateCategory(category);
+                    onOpen();
+                  }}
+                  title="UPDATE"
+                  className="cursor-pointer"
+                />
                 <MdDelete
                   onClick={() => handleDeleteCategory(category._id)}
                   title="DELETE"
@@ -52,6 +63,11 @@ const AllCategory = ({ categories }) => {
           ))}
         </TableBody>
       </Table>
+      <UpdateCategoryModal
+        category={updateCategory}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
     </>
   );
 };
