@@ -1,3 +1,5 @@
+import { updateCategoryInfo } from "@/actions/categoryActions";
+import { uploadImageToCloudinary } from "@/utils/uploadImageToCloudinary";
 import {
   Button,
   Input,
@@ -7,6 +9,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { FaUpload } from "react-icons/fa6";
 
@@ -16,6 +19,19 @@ const UpdateCategoryModal = ({ category, isOpen, onOpenChange }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const onSubmit = async (data) => {
+    const image = data.image[0];
+    const imageUrl = await uploadImageToCloudinary(image);
+
+    const category = { name: data.name, image: imageUrl };
+    const result = await updateCategoryInfo(category._id, category);
+
+    if (result?._id) {
+      toast.success("Category updated successfully!");
+    }
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -23,22 +39,33 @@ const UpdateCategoryModal = ({ category, isOpen, onOpenChange }) => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {category.name}
+                Update category
               </ModalHeader>
               <ModalBody>
-                <form className="space-y-4" noValidate>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="space-y-4"
+                  noValidate
+                >
                   <Input
                     type="name"
                     label="Category Name"
                     {...register("name", {
                       required: "This field is required",
                     })}
+                    defaultValue={category.name}
                     variant="bordered"
                     color={errors.name ? "danger" : "success"}
                     errorMessage={errors?.name?.message}
                     className="w-full"
                   />
                   <div className="relative">
+                    {/* <Image
+                      src={category?.image}
+                      alt="category image"
+                      width={300}
+                      height={400}
+                    /> */}
                     <label htmlFor="image">
                       <div className="w-max flex items-center gap-1 px-6 py-3 bg-green-600 text-white font-semibold cursor-pointer">
                         <FaUpload />
@@ -61,16 +88,16 @@ const UpdateCategoryModal = ({ category, isOpen, onOpenChange }) => {
                       </p>
                     )}
                   </div>
+                  <div className="text-end space-x-4 pb-6">
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                    <Button type="submit" color="success">
+                      Update
+                    </Button>
+                  </div>
                 </form>
               </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button type="submit" color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>
