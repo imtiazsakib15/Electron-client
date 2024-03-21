@@ -36,6 +36,19 @@ const Sidebar = () => {
             </ul>
           </details>
         </div>
+        <div>
+          <details className="focus-visible:outline-none">
+            <summary className="cursor-default">Products</summary>
+            <ul className="ps-8 pt-2 space-y-2">
+              <li>
+                <Link href="/dashboard/products/all">All</Link>
+              </li>
+              <li>
+                <Link href="/dashboard/products/create">Create</Link>
+              </li>
+            </ul>
+          </details>
+        </div>
       </div>
     </div>
   );
