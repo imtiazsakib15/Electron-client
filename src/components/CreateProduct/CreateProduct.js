@@ -6,8 +6,9 @@ import Button from "@/components/Button/Button";
 import { FaUpload } from "react-icons/fa6";
 import { uploadImageToCloudinary } from "@/utils/uploadImageToCloudinary";
 import { toast } from "sonner";
+import { Editor } from "react-simple-wysiwyg";
 
-const CreateProduct = () => {
+const CreateProduct = ({ saveProductInfo }) => {
   const {
     register,
     handleSubmit,
@@ -16,10 +17,24 @@ const CreateProduct = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
+    const image = data.image[0];
+    const imageUrl = await uploadImageToCloudinary(image);
+
+    const category = { ...data, image: imageUrl };
+    console.log(category);
+    const result = await saveProductInfo(category);
+
+    if (result?._id) {
+      toast.success("Product added successfully!");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 w-full"
+      noValidate
+    >
       <div>
         <Input
           type="name"
@@ -52,15 +67,15 @@ const CreateProduct = () => {
         <Input
           type="number"
           label="Old price"
-          {...register("old_price", {
+          {...register("oldPrice", {
             min: {
               value: 0,
               message: "Old price can't be less than zero",
             },
           })}
           variant="bordered"
-          color={errors.old_price ? "danger" : "success"}
-          errorMessage={errors?.old_price?.message}
+          color={errors.oldPrice ? "danger" : "success"}
+          errorMessage={errors?.oldPrice?.message}
           className="w-full"
         />
       </div>
@@ -89,6 +104,18 @@ const CreateProduct = () => {
           className="w-full"
         />
       </div>
+      {/* <div>
+        <Editor
+          {...register("description", {
+            required: "This field is required",
+          })}
+        />
+        {errors?.description?.message && (
+          <p className="text-[#F31260] text-xs py-1">
+            {errors?.description?.message}
+          </p>
+        )}
+      </div> */}
       <div className="relative">
         <label htmlFor="image">
           <div className="w-max flex items-center gap-1 px-6 py-3 bg-green-600 text-white font-semibold cursor-pointer">

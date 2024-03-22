@@ -2,14 +2,17 @@
 
 import AuthProvider from "@/providers/AuthProvider";
 import { NextUIProvider } from "@nextui-org/react";
+import { EditorProvider } from "react-simple-wysiwyg";
 import { Toaster } from "sonner";
 
 export function Providers({ children }) {
   return (
     <AuthProvider>
       <NextUIProvider>
-        {children}
-        <Toaster richColors position="top-center" />
+        <EditorProvider>
+          {children}
+          <Toaster richColors position="top-center" />
+        </EditorProvider>
       </NextUIProvider>
     </AuthProvider>
   );
