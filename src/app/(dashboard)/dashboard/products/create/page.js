@@ -9,7 +9,7 @@ export const metadata = {
 const CreateProductPage = () => {
   return (
     <div className="h-screen w-full lg:w-[1140px] lg:mx-auto grid place-items-center px-4 sm:px-8 lg:px-12 py-6 sm:py-10 lg:py-14">
-      <div>
+      <div className="w-full">
         <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold text-center pb-8">
           Create New Product
         </h1>

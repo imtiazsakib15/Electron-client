@@ -14,3 +14,11 @@ export const saveProductInfo = async (data) => {
   revalidatePath("/(dashboard)/dashboard/products/all", "page");
   return result;
 };
+
+export const getAllProduct = async (data) => {
+  const response = await fetch("http://localhost:5000/api/products", {
+    next: { revalidate: 60 },
+  });
+  const result = await response.json();
+  return result;
+};
