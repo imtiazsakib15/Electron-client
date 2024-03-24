@@ -4,7 +4,7 @@ export const metadata = {
 };
 
 import { getAllCategory } from "@/actions/categoryActions";
-import AllCategory from "@/components/AllCategory/AllCategory";
+import AllCategoryTable from "@/components/AllCategoryTable/AllCategoryTable";
 
 const AllCategoryPage = async () => {
   const categories = await getAllCategory();
@@ -14,7 +14,7 @@ const AllCategoryPage = async () => {
       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold pb-6 text-center">
         All Category
       </h1>
-      <AllCategory categories={categories} />
+      <AllCategoryTable categories={categories} />
     </div>
   );
 };

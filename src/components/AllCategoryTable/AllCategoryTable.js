@@ -16,7 +16,7 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 import UpdateCategoryModal from "../UpdateCategoryModal/UpdateCategoryModal";
 import { useState } from "react";
-const AllCategory = ({ categories }) => {
+const AllCategoryTable = ({ categories }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [updateCategory, setUpdateCategory] = useState(null);
 
@@ -72,4 +72,4 @@ const AllCategory = ({ categories }) => {
   );
 };
 
-export default AllCategory;
+export default AllCategoryTable;
