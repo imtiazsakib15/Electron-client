@@ -3,9 +3,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "",
-        port: "",
-        // pathname: '/my-bucket/**',
+        hostname: "res.cloudinary.com",
       },
     ],
   },

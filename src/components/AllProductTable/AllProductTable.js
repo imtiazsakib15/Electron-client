@@ -30,20 +30,20 @@ const AllCategoryTable = ({ products }) => {
           {products?.map((product) => (
             <TableRow key={product._id}>
               <TableCell>
-                {/* <Image
+                <Image
                   src={product.image}
                   alt={`${product.name} Image`}
                   width={100}
                   height={100}
-                /> */}
-                IMAGE
+                  className="size-24 rounded-lg"
+                />
               </TableCell>
               <TableCell className="w-min">{product.name}</TableCell>
               <TableCell>{product.price}</TableCell>
               <TableCell>{product.oldPrice}</TableCell>
               <TableCell>{product.category}</TableCell>
               <TableCell>{product.availability}</TableCell>
-              <TableCell className="flex gap-4 text-xl">
+              <TableCell className="flex items-center h-24 gap-4 text-xl">
                 <CiEdit title="UPDATE" className="cursor-pointer" />
                 <MdDelete
                   title="DELETE"
