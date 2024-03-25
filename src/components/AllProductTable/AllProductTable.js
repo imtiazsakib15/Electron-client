@@ -30,9 +30,7 @@ const AllProductTable = ({ products }) => {
       if (result.isConfirmed) {
         const result = await deleteProductInfo(id);
 
-        if (result?._id) {
-          toast.success("Product deleted!");
-        }
+        if (result?._id) toast.success("Product deleted successfully!");
       }
     });
   };

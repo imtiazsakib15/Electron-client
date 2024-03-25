@@ -16,16 +16,27 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 import UpdateCategoryModal from "../UpdateCategoryModal/UpdateCategoryModal";
 import { useState } from "react";
+import Swal from "sweetalert2";
 const AllCategoryTable = ({ categories }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [updateCategory, setUpdateCategory] = useState(null);
 
   const handleDeleteCategory = async (id) => {
-    const result = await deleteCategoryInfo(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const result = await deleteCategoryInfo(id);
 
-    if (result?._id) {
-      toast.success("Category deleted successfully!");
-    }
+        if (result?._id) toast.success("Category deleted successfully!");
+      }
+    });
   };
 
   return (
