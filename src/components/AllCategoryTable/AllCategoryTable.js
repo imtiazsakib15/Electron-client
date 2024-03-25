@@ -36,15 +36,20 @@ const AllCategoryTable = ({ categories }) => {
           <TableColumn>NAME</TableColumn>
           <TableColumn>ACTIONS</TableColumn>
         </TableHeader>
-        <TableBody>
+        <TableBody emptyContent={"No category found."}>
           {categories?.map((category) => (
             <TableRow key={category._id}>
               <TableCell>
-                {/* <Image src={category.image} alt={`${category.name} Image`} /> */}
-                IMAGE
+                <Image
+                  src={category.image}
+                  alt={`${category.name} Image`}
+                  width={100}
+                  height={100}
+                  className="w-28 h-24 rounded-lg"
+                />
               </TableCell>
               <TableCell>{category.name}</TableCell>
-              <TableCell className="flex gap-4 text-xl">
+              <TableCell className="flex items-center h-28 gap-4 text-xl">
                 <CiEdit
                   onClick={() => {
                     setUpdateCategory(category);
