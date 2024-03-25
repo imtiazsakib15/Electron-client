@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteProductInfo } from "@/actions/productActions";
 import {
   Table,
   TableHeader,
@@ -12,8 +13,30 @@ import {
 import Image from "next/image";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
 
-const AllCategoryTable = ({ products }) => {
+const AllProductTable = ({ products }) => {
+  const handleDeleteProduct = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const result = await deleteProductInfo(id);
+
+        if (result?._id) {
+          toast.success("Product deleted!");
+        }
+      }
+    });
+  };
+
   return (
     <>
       <Table aria-label="All product table">
@@ -35,7 +58,7 @@ const AllCategoryTable = ({ products }) => {
                   alt={`${product.name} Image`}
                   width={100}
                   height={100}
-                  className="size-24 rounded-lg"
+                  className="w-28 h-24 rounded-lg"
                 />
               </TableCell>
               <TableCell className="w-min">{product.name}</TableCell>
@@ -43,9 +66,10 @@ const AllCategoryTable = ({ products }) => {
               <TableCell>{product.oldPrice}</TableCell>
               <TableCell>{product.category}</TableCell>
               <TableCell>{product.availability}</TableCell>
-              <TableCell className="flex items-center h-24 gap-4 text-xl">
+              <TableCell className="flex items-center h-28 gap-4 text-xl">
                 <CiEdit title="UPDATE" className="cursor-pointer" />
                 <MdDelete
+                  onClick={() => handleDeleteProduct(product._id)}
                   title="DELETE"
                   className="text-red-500 cursor-pointer"
                 />
@@ -58,4 +82,4 @@ const AllCategoryTable = ({ products }) => {
   );
 };
 
-export default AllCategoryTable;
+export default AllProductTable;

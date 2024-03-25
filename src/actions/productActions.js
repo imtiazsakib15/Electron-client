@@ -22,3 +22,12 @@ export const getAllProduct = async (data) => {
   const result = await response.json();
   return result;
 };
+
+export const deleteProductInfo = async (id) => {
+  const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+    method: "DELETE",
+  });
+  const result = await response.json();
+  revalidatePath("/(dashboard)/dashboard/products/all", "page");
+  return result;
+};
