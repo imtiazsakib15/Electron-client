@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import UpdateCategoryModal from "../UpdateCategoryModal/UpdateCategoryModal";
 import { useState } from "react";
 import Swal from "sweetalert2";
-const AllCategoryTable = ({ categories }) => {
+const AllCategoryTable = ({ categories, updateCategoryInfo }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [updateCategory, setUpdateCategory] = useState(null);
 
@@ -81,6 +81,7 @@ const AllCategoryTable = ({ categories }) => {
       </Table>
       <UpdateCategoryModal
         category={updateCategory}
+        updateCategoryInfo={updateCategoryInfo}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       />

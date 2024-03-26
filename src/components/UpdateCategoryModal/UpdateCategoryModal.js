@@ -1,4 +1,3 @@
-import { updateCategoryInfo } from "@/actions/categoryActions";
 import { uploadImageToCloudinary } from "@/utils/uploadImageToCloudinary";
 import {
   Button,
@@ -12,8 +11,14 @@ import {
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { FaUpload } from "react-icons/fa6";
+import { toast } from "sonner";
 
-const UpdateCategoryModal = ({ category, isOpen, onOpenChange }) => {
+const UpdateCategoryModal = ({
+  category,
+  updateCategoryInfo,
+  isOpen,
+  onOpenChange,
+}) => {
   const {
     register,
     handleSubmit,
@@ -24,8 +29,8 @@ const UpdateCategoryModal = ({ category, isOpen, onOpenChange }) => {
     const image = data.image[0];
     const imageUrl = await uploadImageToCloudinary(image);
 
-    const category = { name: data.name, image: imageUrl };
-    const result = await updateCategoryInfo(category._id, category);
+    const updatedCategory = { name: data.name, image: imageUrl };
+    const result = await updateCategoryInfo(category?._id, updatedCategory);
 
     if (result?._id) {
       toast.success("Category updated successfully!");
@@ -92,7 +97,7 @@ const UpdateCategoryModal = ({ category, isOpen, onOpenChange }) => {
                     <Button color="danger" variant="light" onPress={onClose}>
                       Close
                     </Button>
-                    <Button type="submit" color="success">
+                    <Button type="submit" color="success" onPress={onClose}>
                       Update
                     </Button>
                   </div>
