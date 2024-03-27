@@ -6,7 +6,8 @@ import Button from "@/components/Button/Button";
 import { FaUpload } from "react-icons/fa6";
 import { uploadImageToCloudinary } from "@/utils/uploadImageToCloudinary";
 import { toast } from "sonner";
-import { Editor } from "react-simple-wysiwyg";
+import Tiptap from "@/components/Tiptap/Tiptap";
+import { useState } from "react";
 
 const CreateProduct = ({ saveProductInfo }) => {
   const {
@@ -14,14 +15,13 @@ const CreateProduct = ({ saveProductInfo }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [description, setDescription] = useState("");
 
   const onSubmit = async (data) => {
-    console.log(data);
     const image = data.image[0];
     const imageUrl = await uploadImageToCloudinary(image);
 
-    const category = { ...data, image: imageUrl };
-    console.log(category);
+    const category = { ...data, image: imageUrl, description };
     const result = await saveProductInfo(category);
 
     if (result?._id) {
@@ -48,6 +48,7 @@ const CreateProduct = ({ saveProductInfo }) => {
           className="w-full"
         />
       </div>
+
       <div className="flex flex-col sm:flex-row gap-5">
         <Input
           type="number"
@@ -104,18 +105,9 @@ const CreateProduct = ({ saveProductInfo }) => {
           className="w-full"
         />
       </div>
-      {/* <div>
-        <Editor
-          {...register("description", {
-            required: "This field is required",
-          })}
-        />
-        {errors?.description?.message && (
-          <p className="text-[#F31260] text-xs py-1">
-            {errors?.description?.message}
-          </p>
-        )}
-      </div> */}
+
+      <Tiptap content={description} setDescription={setDescription} />
+
       <div className="relative">
         <label htmlFor="image">
           <div className="w-max flex items-center gap-1 px-6 py-3 bg-green-600 text-white font-semibold cursor-pointer">
