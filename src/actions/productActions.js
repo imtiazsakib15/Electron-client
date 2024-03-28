@@ -23,6 +23,19 @@ export const getAllProduct = async (data) => {
   return result;
 };
 
+export const updateProductInfo = async (id, data) => {
+  const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const result = await response.json();
+  revalidatePath("/(dashboard)/dashboard/products/all", "page");
+  return result;
+};
+
 export const deleteProductInfo = async (id) => {
   const response = await fetch(`http://localhost:5000/api/products/${id}`, {
     method: "DELETE",

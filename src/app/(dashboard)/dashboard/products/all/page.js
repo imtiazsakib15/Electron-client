@@ -1,4 +1,4 @@
-import { getAllProduct } from "@/actions/productActions";
+import { getAllProduct, updateProductInfo } from "@/actions/productActions";
 import AllProductTable from "@/components/AllProductTable/AllProductTable";
 
 export const metadata = {
@@ -14,7 +14,10 @@ const AllProductPage = async () => {
       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold pb-6 text-center">
         All Product
       </h1>
-      <AllProductTable products={products} />
+      <AllProductTable
+        products={products}
+        updateProductInfo={updateProductInfo}
+      />
     </div>
   );
 };

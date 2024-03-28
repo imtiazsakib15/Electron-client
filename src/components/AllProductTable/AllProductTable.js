@@ -15,8 +15,13 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import UpdateProductModal from "../UpdateProductModal/UpdateProductModal";
+import { useState } from "react";
 
-const AllProductTable = ({ products }) => {
+const AllProductTable = ({ products, updateProductInfo }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [updateProduct, setUpdateProduct] = useState(null);
+
   const handleDeleteProduct = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -65,7 +70,14 @@ const AllProductTable = ({ products }) => {
               <TableCell>{product.category}</TableCell>
               <TableCell>{product.availability}</TableCell>
               <TableCell className="flex items-center h-28 gap-4 text-xl">
-                <CiEdit title="UPDATE" className="cursor-pointer" />
+                <CiEdit
+                  onClick={() => {
+                    setUpdateProduct(product);
+                    onOpen();
+                  }}
+                  title="UPDATE"
+                  className="cursor-pointer"
+                />
                 <MdDelete
                   onClick={() => handleDeleteProduct(product._id)}
                   title="DELETE"
@@ -76,6 +88,12 @@ const AllProductTable = ({ products }) => {
           ))}
         </TableBody>
       </Table>
+      <UpdateProductModal
+        product={updateProduct}
+        updateProductInfo={updateProductInfo}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
     </>
   );
 };
