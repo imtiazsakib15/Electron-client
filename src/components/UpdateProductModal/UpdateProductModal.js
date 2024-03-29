@@ -25,7 +25,19 @@ const UpdateProductModal = ({
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState(product?.description);
+
+  const onSubmit = async (data) => {
+    const image = data.image[0];
+    const imageUrl = await uploadImageToCloudinary(image);
+
+    const updatedProduct = { ...data, image: imageUrl, description };
+    const result = await updateProductInfo(product?._id, updatedProduct);
+
+    if (result?._id) {
+      toast.success("Product updated successfully!");
+    }
+  };
 
   return (
     <>
@@ -38,7 +50,7 @@ const UpdateProductModal = ({
               </ModalHeader>
               <ModalBody>
                 <form
-                  // onSubmit={handleSubmit(onSubmit)}
+                  onSubmit={handleSubmit(onSubmit)}
                   className="space-y-4"
                   noValidate
                 >
@@ -46,6 +58,7 @@ const UpdateProductModal = ({
                     <Input
                       type="name"
                       label="Product Name"
+                      defaultValue={product?.name}
                       {...register("name", {
                         required: "This field is required",
                       })}
@@ -60,6 +73,7 @@ const UpdateProductModal = ({
                     <Input
                       type="number"
                       label="Current price"
+                      defaultValue={product?.price}
                       {...register("price", {
                         required: "This field is required",
                         min: {
@@ -75,6 +89,7 @@ const UpdateProductModal = ({
                     <Input
                       type="number"
                       label="Old price"
+                      defaultValue={product?.oldPrice}
                       {...register("oldPrice", {
                         min: {
                           value: 0,
@@ -92,6 +107,7 @@ const UpdateProductModal = ({
                     <Input
                       type="text"
                       label="Category"
+                      defaultValue={product?.category}
                       {...register("category", {
                         required: "This field is required",
                       })}
@@ -103,6 +119,7 @@ const UpdateProductModal = ({
                     <Input
                       type="text"
                       label="Availability"
+                      defaultValue={product?.availability}
                       {...register("availability", {
                         required: "This field is required",
                       })}
